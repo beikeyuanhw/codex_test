@@ -24,7 +24,8 @@ langgraph-agent-project/
 │   │   └── tools.py             # 工具定义
 │   └── main.py                  # 主应用入口
 ├── examples/
-│   └── basic_usage.py           # 使用示例
+│   ├── basic_usage.py           # 基本使用示例
+│   └── deep_research_demo.py    # 深度研究示例
 ├── tests/
 │   └── test_agent.py            # 测试文件
 ├── docs/                        # 文档目录
@@ -173,6 +174,15 @@ math_config = Configuration(
 
 result = run_agent("请计算圆周率乘以半径为5的圆的面积", math_config)
 print(result)
+```
+
+### 深度研究示例
+
+项目还提供了一个更复杂的研究脚本 `examples/deep_research_demo.py`，
+展示了如何在同一会话中连续提出问题并利用搜索与计算工具。
+
+```bash
+python examples/deep_research_demo.py
 ```
 
 ### Web API使用
