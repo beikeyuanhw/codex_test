@@ -1,0 +1,40 @@
+body {
+  font-family: sans-serif;
+  margin: 20px;
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#prompt-input {
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+}
+
+#generate-btn {
+  padding: 8px 12px;
+  font-size: 16px;
+}
+
+#cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.card {
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  width: 30%;
+  min-width: 180px;
+}
+
+.error {
+  color: red;
+}

@@ -25,9 +25,11 @@ langgraph-agent-project/
 │   └── main.py                  # 主应用入口
 ├── examples/
 │   ├── basic_usage.py           # 基本使用示例
-│   └── deep_research_demo.py    # 深度研究示例
+│   ├── deep_research_demo.py    # 深度研究示例
+│   └── multiagent_demo.py       # 多代理示例
 ├── tests/
 │   └── test_agent.py            # 测试文件
+├── electron-app/               # Electron桌面客户端
 ├── docs/                        # 文档目录
 ├── requirements.txt             # Python依赖
 ├── pyproject.toml              # 项目配置
@@ -183,6 +185,24 @@ print(result)
 
 ```bash
 python examples/deep_research_demo.py
+```
+
+### Multi-Agent Demo
+
+项目还提供了 `examples/multiagent_demo.py`，演示两个代理之间如何通过管理器互相对话。
+
+```bash
+python examples/multiagent_demo.py
+```
+
+### Electron可视化界面
+
+项目提供了 `electron-app` 目录，使用Electron构建桌面界面，可输入提示词并生成相关思考卡片。
+
+```bash
+cd electron-app
+npm install
+npm start
 ```
 
 ### Web API使用

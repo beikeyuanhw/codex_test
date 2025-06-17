@@ -1,0 +1,14 @@
+{
+  "name": "langgraph-desktop",
+  "version": "0.1.0",
+  "description": "Electron UI for LangGraph agent",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^30.0.0",
+    "openai": "^4.0.0",
+    "dotenv": "^16.0.0"
+  }
+}
