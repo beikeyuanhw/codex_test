@@ -1,82 +1,43 @@
-"""配置管理模块
+"""Simplified configuration module."""
 
-定义了LangGraph代理的可配置参数。
-"""
+from __future__ import annotations
 
-from typing import Optional, List
-from pydantic import BaseModel, Field
+from dataclasses import dataclass
+from typing import Optional
 
 
-class Configuration(BaseModel):
-    """LangGraph代理的配置类
-    
-    这个类定义了代理运行时可以配置的参数，包括模型选择、
-    系统提示词、工具启用状态等。
-    """
-    
-    # 模型配置
-    model_provider: str = Field(
-        default="openai",
-        description="LLM提供商 (openai, anthropic)"
+@dataclass
+class Configuration:
+    """Configuration options for the agent."""
+
+    # Model options
+    model_provider: str = "openai"
+    model_name: str = "gpt-4o-mini"
+    temperature: float = 0.1
+    max_tokens: Optional[int] = 1000
+
+    # System behaviour
+    system_prompt: str = (
+        "你是一个有用的AI助手，能够使用各种工具来帮助用户解决问题。请根据用户的需求选择合适的工具，并提供准确、有用的回答。"
     )
-    model_name: str = Field(
-        default="gpt-4o-mini",
-        description="使用的模型名称"
-    )
-    temperature: float = Field(
-        default=0.1,
-        ge=0.0,
-        le=2.0,
-        description="模型温度参数，控制输出的随机性"
-    )
-    max_tokens: Optional[int] = Field(
-        default=1000,
-        gt=0,
-        description="最大输出token数"
-    )
-    
-    # 系统配置
-    system_prompt: str = Field(
-        default="你是一个有用的AI助手，能够使用各种工具来帮助用户解决问题。请根据用户的需求选择合适的工具，并提供准确、有用的回答。",
-        description="系统提示词"
-    )
-    
-    # 工具配置
-    enable_weather_tool: bool = Field(
-        default=True,
-        description="是否启用天气查询工具"
-    )
-    enable_search_tool: bool = Field(
-        default=True,
-        description="是否启用网络搜索工具"
-    )
-    enable_calculator_tool: bool = Field(
-        default=True,
-        description="是否启用计算器工具"
-    )
-    
-    # 执行配置
-    max_iterations: int = Field(
-        default=10,
-        gt=0,
-        description="最大迭代次数"
-    )
-    enable_human_in_loop: bool = Field(
-        default=False,
-        description="是否启用人工干预"
-    )
-    
-    # 内存配置
-    enable_memory: bool = Field(
-        default=True,
-        description="是否启用对话记忆"
-    )
-    memory_key: str = Field(
-        default="chat_history",
-        description="内存存储的键名"
-    )
-    
-    class Config:
-        """Pydantic配置"""
-        extra = "forbid"  # 禁止额外字段
-        validate_assignment = True  # 启用赋值验证
+
+    # Tool toggles
+    enable_weather_tool: bool = True
+    enable_search_tool: bool = True
+    enable_calculator_tool: bool = True
+
+    # Execution options
+    max_iterations: int = 10
+    enable_human_in_loop: bool = False
+
+    # Memory
+    enable_memory: bool = True
+    memory_key: str = "chat_history"
+
+    def __post_init__(self) -> None:
+        if not 0.0 <= self.temperature <= 2.0:
+            raise ValueError("temperature must be between 0.0 and 2.0")
+        if self.max_tokens is not None and self.max_tokens <= 0:
+            raise ValueError("max_tokens must be greater than 0")
+        if self.max_iterations <= 0:
+            raise ValueError("max_iterations must be greater than 0")

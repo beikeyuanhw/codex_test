@@ -6,7 +6,7 @@ instantiate multiple agent graphs and route messages between them.
 
 from typing import Dict, List
 
-from langchain_core.messages import AIMessage, HumanMessage, BaseMessage
+from agent.graph import AIMessage, HumanMessage, BaseMessage
 
 from agent import Configuration, create_agent_graph
 
@@ -33,8 +33,8 @@ class MultiAgentManager:
         history.extend(result["messages"])
         reply = ""
         for msg in reversed(result["messages"]):
-            if isinstance(msg, AIMessage):
-                reply = msg.content
+            if isinstance(msg, AIMessage) or hasattr(msg, "content"):
+                reply = getattr(msg, "content", "")
                 break
         return reply
 
