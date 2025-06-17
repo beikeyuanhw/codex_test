@@ -216,6 +216,7 @@ models/
 data/
 *.csv
 *.json
+!electron-app/package.json
 *.parquet
 
 # Docker
@@ -231,3 +232,6 @@ data/
 .DS_Store?
 ehthumbs.db
 Thumbs.db
+# Node
+node_modules/
+electron-app/node_modules/

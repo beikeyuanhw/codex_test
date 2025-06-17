@@ -3,10 +3,14 @@
 定义了代理可以使用的各种工具函数。
 """
 
-import json
-import requests
 from typing import Dict, Any
-from langchain_core.tools import tool
+
+try:  # 如果缺少 langchain_core, 提供简易 tool 装饰器
+    from langchain_core.tools import tool
+except Exception:  # pragma: no cover - fallback for limited env
+    def tool(func):
+        """Fallback tool decorator doing nothing."""
+        return func
 
 
 @tool
