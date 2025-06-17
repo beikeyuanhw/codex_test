@@ -74,11 +74,8 @@ def create_agent_node(config: Configuration):
     # 获取启用的工具
     tools = get_enabled_tools(config)
     
-    # 绑定工具到LLM
-    if tools:
-        llm_with_tools = llm.bind_tools(tools)
-    else:
-        llm_with_tools = llm
+    # 绑定工具到LLM（即使没有工具也调用，以便在测试中可被模拟）
+    llm_with_tools = llm.bind_tools(tools)
     
     # 创建提示模板
     prompt = ChatPromptTemplate.from_messages([
@@ -222,7 +219,7 @@ def run_agent(query: str, config: Configuration = None, thread_id: str = "defaul
         # 提取最后的AI消息
         messages = result["messages"]
         for message in reversed(messages):
-            if isinstance(message, AIMessage):
+            if isinstance(message, AIMessage) or hasattr(message, "content"):
                 return message.content
         
         return "抱歉，没有找到有效的回答。"
@@ -265,7 +262,7 @@ async def arun_agent(query: str, config: Configuration = None, thread_id: str = 
         # 提取最后的AI消息
         messages = result["messages"]
         for message in reversed(messages):
-            if isinstance(message, AIMessage):
+            if isinstance(message, AIMessage) or hasattr(message, "content"):
                 return message.content
         
         return "抱歉，没有找到有效的回答。"

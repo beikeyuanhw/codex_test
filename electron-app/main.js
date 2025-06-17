@@ -3,9 +3,16 @@ const path = require('path');
 const { OpenAI } = require('openai');
 require('dotenv').config();
 
+if (!process.env.OPENAI_API_KEY) {
+  console.warn('⚠️  OPENAI_API_KEY is not set. The app may not work correctly.');
+}
+
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 async function generateIdeas(prompt) {
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error('Missing OPENAI_API_KEY');
+  }
   const sys = '你是一个头脑风暴助手，针对用户的问题提供3到5个发散性的思考点，每个思考点一句话，以JSON数组返回。';
   const res = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
@@ -28,6 +35,8 @@ function createWindow() {
     height: 700,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: false,
+      contextIsolation: true,
     },
   });
 

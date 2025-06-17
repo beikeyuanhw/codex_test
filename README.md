@@ -205,6 +205,8 @@ npm install
 npm start
 ```
 
+> **注意**: 启动桌面客户端前请确保已在 `.env` 文件中配置 `OPENAI_API_KEY`，否则生成请求将会失败。
+
 ### Web API使用
 
 ```python

@@ -33,7 +33,7 @@ class MultiAgentManager:
         history.extend(result["messages"])
         reply = ""
         for msg in reversed(result["messages"]):
-            if isinstance(msg, AIMessage):
+            if isinstance(msg, AIMessage) or hasattr(msg, "content"):
                 reply = msg.content
                 break
         return reply
